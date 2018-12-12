@@ -35,10 +35,15 @@ def export_csv():
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerow(dirlist)
 	
+def export_txt():
+	with open("targets.txt", "w") as text_file:
+		text_file.write(str(dirlist))
+
 def main():
 	welcome_msg()
 	get_start_path()
 	search_files()
 	export_csv()
+	export_txt()
 
 main()
