@@ -10,10 +10,10 @@ filelist = []
 def search_files():
 	print("\nThe following directories have been found:\n")
 	for root, dirs, files in os.walk("C:/Users/Schwizgebel/Programmieren"):
-		for file in files:
-			if file.endswith(".txt"):
-				filelist.append(file)
-				print(os.path.join(root, file))
+		for dir in dirs:
+			if dir.endswith("dir"):
+				filelist.append(dir)
+				print(os.path.join(root, dir))
 	print("\n" + str(filelist))
 
 #def get_start_path():
