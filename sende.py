@@ -4,22 +4,28 @@
 import sys
 import os
 import csv
+from datetime import datetime
 
+folderlist = []
 dirlist = []
 os.path.start_path = 0
 
 def welcome_msg():
 	print("\nThis is -> SEARCH AND DESTROY <-\n")
 
+def get_time():
+	t = datetime.now()
+	return t.strftime('%d-%m-%y %H%M')
+
 def search_files():
 	print("\nThe following directories have been found:\n")
-	#for root, dirs, files in os.walk("C:/Users/Schwizgebel/Programmieren"):
 	for root, dirs, files in os.walk(os.path.start_path):
 		for dir in dirs:
 			if dir.endswith("dir"):
-				dirlist.append(dir)
+				folderlist.append(dir)
+				dirlist.append(str(os.path.join(root, dir)))
 				print("\t" + str(os.path.join(root, dir)))
-	print("\n\t" + str(dirlist))
+	print("\n\t" + str(folderlist))
 
 def get_start_path():
 	os.path.start_path = input("\tEnter the start path. Leave empty for test structure.\n\t")
@@ -31,13 +37,15 @@ def check_target():
 	print(".")
 
 def export_csv():
-	with open('targets.csv', 'w', newline='\n') as csvfile:
+	with open(str("logs/targets-" + str(get_time()) + ".csv"), 'w', newline='\n') as csvfile:
 		csvwriter = csv.writer(csvfile)
-		csvwriter.writerow(dirlist)
+		csvwriter.writerow("Directory: " + str(os.path.start_path))
+		csvwriter.writerow(folderlist)
 	
 def export_txt():
-	with open("targets.txt", "w") as text_file:
-		text_file.write(str(dirlist))
+	with open(str("logs/targets-" + str(get_time()) + ".txt"), "w") as dir_file:
+		for item in dirlist:
+			dir_file.write("%s\n" % item)
 
 def main():
 	welcome_msg()
